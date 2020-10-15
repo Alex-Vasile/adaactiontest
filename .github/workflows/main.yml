@@ -21,13 +21,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 #       - uses: actions/checkout@v2
 
-      - name: Install wget and bash
-        run: brew install wget bash
+      - name: Install newer bash
+        run: brew install bash
 
       - name: Install GNAT
         run: |
           wget https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 -O gnat.tar.bz2,
-          tar -xf gnat.tar.bz2,
+          tar -xvf gnat.tar.bz2,
           cd gnat,
           ./doinstall.
         # TODO: how do I pass it commands??
