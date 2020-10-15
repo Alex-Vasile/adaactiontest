@@ -1,19 +1,15 @@
-# This is a basic workflow to help you get started with Actions
+name: Build Binaries
 
-name: Build with Ada
-
-# Mac compiles are expensive, setup as only on demand for now
+# Have this run manually
 on:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  # The mac version
+  macOS:
     runs-on: macos-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # - name: Download ada code
         # run: |
@@ -21,16 +17,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 #       - uses: actions/checkout@v2
 
-      # Will need this newer version of bash for `make test`
-#       - name: Install newer bash
-#         run: brew install bash
+      - name: Install newer bash
+        run: brew install bash
 
       - name: Install GNAT
         run: |
-          mkdir gnat,
+          mkdir gnat
           wget https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 -O gnat.tar.bz2,
           tar -xvf gnat.tar.bz2 --strip-components 1 -C gnat,
-          ./gnat/doinstall.
+          cd gnat,
+          ./doinstall.
         # TODO: how do I pass it commands??
 
       - name: Make ada code
