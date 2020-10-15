@@ -11,9 +11,6 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      # - name: Download ada code
-        # run: |
-          # git clone --depth=1 https://github.com/mk270/whitakers-words
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 #       - uses: actions/checkout@v2
 
@@ -21,16 +18,21 @@ jobs:
       # - name: Install newer bash
       #   run: brew install bash
 
+      - name: Setup Directories 
+        run: mkdir gnat
+
+      - name: Download GNAT 
+        run: wget https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 -O gnat.tar.bz2
+        
+      - name: Extract GNAT
+        run: tar -xvf gnat.tar.bz2 --strip-components 1 -C gnat
+
+        # TODO: how do I pass it keyboard commands??
       - name: Install GNAT
-        run: |
-          mkdir gnat
-          wget https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 -O gnat.tar.bz2,
-          tar -xvf gnat.tar.bz2 --strip-components 1 -C gnat,
-          cd gnat,
-          ./doinstall.
-        # TODO: how do I pass it commands??
+        run: ./gnat/doinstall
+
+      - name: Download ada code
+        run: git clone --depth=1 https://github.com/mk270/whitakers-words
 
       - name: Make ada code
-        run: |
-          cd whitakers-words,
-          make.
+        run: cd whitakers-words && make 
