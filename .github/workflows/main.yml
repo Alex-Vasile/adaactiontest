@@ -22,8 +22,7 @@ jobs:
 #       - uses: actions/checkout@v2
 
       - name: Install wget and bash
-        run: |
-          brew install wget bash.
+        run: brew install wget bash
 
       - name: Install GNAT
         run: |
