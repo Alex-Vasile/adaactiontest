@@ -47,7 +47,7 @@ jobs:
         run: ./bin/words victori
 
   linux:
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
