@@ -15,8 +15,8 @@ jobs:
 #       - uses: actions/checkout@v2
 
       # will need this for `make test`
-      # - name: Install newer bash
-      #   run: brew install bash
+#       - name: Install newer bash
+#         run: brew install bash
 
       - name: Setup Directories 
         run: mkdir gnat
@@ -26,12 +26,21 @@ jobs:
         
       - name: Extract GNAT
         run: tar -xvf gnat.tar.bz2 --strip-components 1 -C gnat
-        
+
       - name: Install GNAT
+        # This hardcoding is probably not the best idea.
         run: cd gnat && make ins-all prefix=$HOME/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
+
+      - name: Update path
+        run: export PATH="$HOME/gcc/bin:$PATH"
 
       - name: Download ada code
         run: git clone --depth=1 https://github.com/mk270/whitakers-words
 
       - name: Make ada code
+        # Replace with this line when on main branch
+#         run: cd $ GITHUB_WORKSPACE && make
         run: cd whitakers-words && make
+
+      - name: Test simple word
+        run: ./bin/words victori
