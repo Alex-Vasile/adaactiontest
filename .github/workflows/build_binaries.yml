@@ -31,42 +31,38 @@ jobs:
         # This hardcoding is probably not the best idea.
         run: cd gnat && make ins-all prefix=$HOME/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
 
-#       - name: Update path
-#         run: echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
+      - name: Update Path
+        run: pwd && echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
 
       - name: Download whitakers-words
         run: git clone --depth=1 https://github.com/mk270/whitakers-words
 
-      - name: Make whitakers-words
+      - name: Compile
         # Replace with this line when on main branch
 #         run: cd $ GITHUB_WORKSPACE && make
-        run: cd whitakers-words && make
-        env:
-          PATH: PATH="$HOME/gcc/bin:$PATH"
+        run: echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile && export PATH="$HOME/gcc/bin:$PATH" && cd whitakers-words && make all
 
         # TODO: Change this actual tests once they will run on macOS
       - name: Test simple word
-        run: ./bin/words victori
-        env:
-          PATH: PATH="$HOME/gcc/bin:$PATH"
+        run: ./whitakers-words/bin/words victori
 
   linux:
-    runs-on: ubuntu-latest
+    runs-on: linux-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 #       - uses: actions/checkout@v2
 
-      - name: Install tools
-        run: sudo apt-get install gnat gprbuild
+      - name: Install GNAT
+        run: apt install gnat gprbuild
 
-      - name: Download ada code
+      - name: Download Source
         run: git clone --depth=1 https://github.com/mk270/whitakers-words
 
-      - name: Make ada code
+      - name: Compile
         # Replace with this line when on main branch
 #         run: cd $ GITHUB_WORKSPACE && make
         run: cd whitakers-words && make
       
-      - name: Make tests
+      - name: Run Tests
         run: cd whitakers-words && make test
