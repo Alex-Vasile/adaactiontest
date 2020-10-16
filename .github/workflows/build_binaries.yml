@@ -52,7 +52,7 @@ jobs:
         # Replace with this line when on main branch
 #         run: cd $ GITHUB_WORKSPACE && make
         run: |
-          git clone --depth=1 https://github.com/Alex-Vasile/whitakers-words
+          git clone --depth=1 https://github.com/mk270/whitakers-words
           cd whitakers-words
           make
       
