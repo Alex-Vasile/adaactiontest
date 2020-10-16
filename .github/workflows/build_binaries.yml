@@ -18,7 +18,7 @@ jobs:
 #       - name: Install newer bash
 #         run: brew install bash
 
-      - name: Setup Directories 
+      - name: Setup GNAT Install Directory 
         run: mkdir gnat
 
       - name: Download GNAT 
@@ -29,18 +29,19 @@ jobs:
 
       - name: Install GNAT
         # This hardcoding is probably not the best idea.
-        run: cd gnat && make ins-all prefix=$HOME/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
+        run: cd gnat && make ins-all prefix=/Users/runner/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
 
       - name: Update path
-        run: export PATH="$HOME/gcc/bin:$PATH"
+        run: export PATH="/Users/runner/gcc/bin:$PATH" && echo $PATH && ls /Users/runnner/gcc/bin
 
-      - name: Download ada code
+      - name: Download whitakers-words
         run: git clone --depth=1 https://github.com/mk270/whitakers-words
 
-      - name: Make ada code
+      - name: Make whitakers-words
         # Replace with this line when on main branch
 #         run: cd $ GITHUB_WORKSPACE && make
         run: cd whitakers-words && make
 
+        # TODO: Change this actual tests once they will run on macOS
       - name: Test simple word
         run: ./bin/words victori
