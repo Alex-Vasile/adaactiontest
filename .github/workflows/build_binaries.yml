@@ -53,7 +53,7 @@ jobs:
 #       - uses: actions/checkout@v2
 
       - name: Install GNAT
-        run: apt install gnat gprbuild
+        run: sudo apt install gnat gprbuild
 
       - name: Download Source
         run: git clone --depth=1 https://github.com/mk270/whitakers-words
@@ -66,6 +66,6 @@ jobs:
           make
       
       - name: Run Tests
-        run:
+        run: |
           cd whitakers-words
           make test
