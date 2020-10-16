@@ -55,11 +55,12 @@ jobs:
           git clone --depth=1 https://github.com/Alex-Vasile/whitakers-words
           cd whitakers-words
           make
-          make test
       
       # Move files needed for distribution
       - name: Move Files
         run: |
+          cd whitakers-words
+          make test
 
       - name: Create Binary
         uses: actions/upload-artifact@v2
