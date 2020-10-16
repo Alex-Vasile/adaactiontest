@@ -29,10 +29,10 @@ jobs:
 
         # TODO: how do I pass it keyboard commands??
       - name: Install GNAT
-        run: ./gnat/doinstall
+        run: cd gnat && make ins-all
 
       - name: Download ada code
         run: git clone --depth=1 https://github.com/mk270/whitakers-words
 
       - name: Make ada code
-        run: cd whitakers-words && make 
+        run: cd whitakers-words && make
