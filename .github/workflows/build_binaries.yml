@@ -39,11 +39,13 @@ jobs:
           export PATH="$HOME/gcc/bin:$PATH"
           cd whitakers-words && make all
 
-        # TODO: Change this actual tests once they will run on macOS
-      - name: Test simple word
+        # TODO: This is a hack since mac comes with an old version of bash, v3.2, and the run-tests script is not compatible
+      - name: Run Tests
         run: |
+          brew install bash
           cd whitakers-words/
-          ./bin/words victori
+          sed -i '' 's/\/bin/\/usr\/local\/bin/' test/run-tests.sh
+          make test
 
   linux:
     runs-on: ubuntu-latest
