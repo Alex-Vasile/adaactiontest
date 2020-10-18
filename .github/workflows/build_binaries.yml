@@ -21,7 +21,7 @@ jobs:
           curl https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 | tar -xvz --strip-components 1 -C gnat
           cd gnat
           make ins-all prefix=$HOME/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
-#         echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
+          echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
 
       - name: Whitakers-Words Checkout
         uses: actions/checkout@v2
@@ -31,8 +31,8 @@ jobs:
         # TODO: Fix tests to work with older version of bash. This is a hack.
       - name: Whitakers-Words Build, Test
         # TODO: I don't know which one of these commands actually gets it to work, so for now I'll leave them all
+        # echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
         run: |
-          echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
           export PATH="$HOME/gcc/bin:$PATH"
           cd whitakers-words
           make all
