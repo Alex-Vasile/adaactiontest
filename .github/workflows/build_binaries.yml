@@ -32,8 +32,8 @@ jobs:
       - name: Whitakers-Words Build, Test
         # TODO: I don't know which one of these commands actually gets it to work, so for now I'll leave them all
         # echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
+        # export PATH="$HOME/gcc/bin:$PATH"
         run: |
-          export PATH="$HOME/gcc/bin:$PATH"
           cd whitakers-words
           make all
 
