@@ -19,15 +19,15 @@ jobs:
           make ins-all prefix=$HOME/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
           echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
 
-        # TODO: This is a hack to get around the old version of bash. Will work for now, but it should be fixed.
-      - name: Whitakers-Words Checkout, Build, Test
-        # TODO: Test this line by copying the project files into here before making a PR.
-#         run: cd $ GITHUB_WORKSPACE
-        # I don't know which one of these commands actually gets it to work, so for now I'll leave them all
+      - name: Whitakers-Words Checkout
+        uses: actions/checkout@v2
+
+        # TODO: Fix tests to work with older version of bash. This is a hack.
+      - name: Whitakers-Words Build, Test
+        # TODO: I don't know which one of these commands actually gets it to work, so for now I'll leave them all
         run: |
           echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
           export PATH="$HOME/gcc/bin:$PATH"
-          git clone --depth=1 https://github.com/Alex-Vasile/whitakers-words
           cd whitakers-words
           make all
 
@@ -63,13 +63,15 @@ jobs:
 
     steps:
       - name: GNAT Intall
-        run: sudo apt install gnat gprbuild
-
-      - name: Whitakers-Words Checkout, Build, Test
-        # TODO: Test this line by copying the project files into here before making a PR.
-#         run: cd $ GITHUB_WORKSPACE
         run: |
-          git clone --depth=1 https://github.com/Alex-Vasile/whitakers-words
+          sudo apt-get update
+          sudo apt-get install gnat gprbuild
+
+      - name: Whitakers-Words Checkout
+        uses: actions/checkout@v2
+
+      - name: Whitakers-Words Build, Test
+        run: |
           cd whitakers-words
           make
           make test
