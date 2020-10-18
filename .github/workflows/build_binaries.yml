@@ -11,12 +11,10 @@ jobs:
     runs-on: macos-latest
 
     steps:
-        # TODO: figure out how to run the download and the extract in parallel
       - name: GNAT Install
         run: |
           mkdir gnat
-          wget https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 -O gnat.tar.bz2
-          tar -xvf gnat.tar.bz2 --strip-components 1 -C gnat
+          curl https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 | tar -xvz --strip-components 1 -C gnat
           cd gnat
           make ins-all prefix=$HOME/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
           echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
