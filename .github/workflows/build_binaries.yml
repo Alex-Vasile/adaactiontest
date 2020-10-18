@@ -21,7 +21,7 @@ jobs:
           curl https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 | tar -xvz --strip-components 1 -C gnat
           cd gnat
           make ins-all prefix=$HOME/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
-          echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
+#         echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
 
       - name: Whitakers-Words Checkout
         uses: actions/checkout@v2
