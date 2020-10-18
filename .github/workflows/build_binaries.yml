@@ -13,13 +13,13 @@ jobs:
     runs-on: macos-latest
 
     steps:
-#       - name: GNAT Install
-#         run: |
-#           mkdir gnat
-#           curl https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 | tar -xvz --strip-components 1 -C gnat
-#           cd gnat
-#           make ins-all prefix=$HOME/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
-#           echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
+      - name: GNAT Install
+        run: |
+          mkdir gnat
+          curl https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 | tar -xvz --strip-components 1 -C gnat
+          cd gnat
+          make ins-all prefix=$HOME/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
+          echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
 
       - name: Whitakers-Words Checkout
         uses: actions/checkout@v2
@@ -30,7 +30,6 @@ jobs:
       - name: Whitakers-Words Build, Test
         # TODO: I don't know which one of these commands actually gets it to work, so for now I'll leave them all
         run: |
-          ls
           echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
           export PATH="$HOME/gcc/bin:$PATH"
           cd whitakers-words
@@ -67,10 +66,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#       - name: GNAT Intall
-#         run: |
-#           sudo apt-get update
-#           sudo apt-get install gnat gprbuild
+      - name: GNAT Intall
+        run: |
+          sudo apt-get update
+          sudo apt-get install gnat gprbuild
 
       - name: Whitakers-Words Checkout
         uses: actions/checkout@v2
@@ -79,7 +78,6 @@ jobs:
 
       - name: Whitakers-Words Build, Test
         run: |
-          ls
           cd whitakers-words
           make
           make test
