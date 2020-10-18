@@ -1,0 +1,37 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  # This workflow contains a single job called "build"
+  Windows:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    steps:
+#       - uses: actions/checkout@v2
+
+      - name: Cygwin Install
+        run: # https://cygwin.com/setup-x86_64.exe
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+        
+      - name: GNAT Install
+
+      - name: Whitakers-Words Checkout, Build, Test
+        run: |
+          git clone --depth=1 https://github.com/Alex-Vasile/whitakers-words
+          cd whitakers-words
+          make all
+          
+          
+          
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
