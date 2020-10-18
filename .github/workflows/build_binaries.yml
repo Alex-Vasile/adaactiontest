@@ -6,37 +6,59 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-#   # The mac version
-#   macOS:
-#     runs-on: macos-latest
+  # The mac version
+  macOS:
+    runs-on: macos-latest
 
-#     steps:
-#       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-# #       - uses: actions/checkout@v2
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#       - uses: actions/checkout@v2
 
-#       - name: GNAT Install
-#         run: |
-#           mkdir gnat
-#           wget https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 -O gnat.tar.bz2
-#           tar -xvf gnat.tar.bz2 --strip-components 1 -C gnat
-#           cd gnat
-#           make ins-all prefix=$HOME/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
-#           echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
+      - name: GNAT Install
+        run: |
+          mkdir gnat
+          wget https://master.dl.sourceforge.net/project/gnuada/GNAT_GCC%20Mac%20OS%20X/10.1.0/native/gcc-10.1.0-x86_64-apple-darwin15-bin.tar.bz2 -O gnat.tar.bz2
+          tar -xvf gnat.tar.bz2 --strip-components 1 -C gnat
+          cd gnat
+          make ins-all prefix=$HOME/gcc version=10.1.0 built_prefix="/Volumes/Miscellaneous/tmp/opt/gcc-10.1.0" machine=x86_64-apple-darwin15
+          echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
 
-#       - name: Whitakers-Words Checkout, Build, Test
-#         # Replace with this line when on main branch
-# #         run: cd $ GITHUB_WORKSPACE && make
-#         # I don't know which one of these commands actually gets it to work, so for now I'll leave them all
-#         run: |
-#           echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
-#           export PATH="$HOME/gcc/bin:$PATH"
-#           git clone --depth=1 https://github.com/Alex-Vasile/whitakers-words
-#           cd whitakers-words
-#           make all
+      - name: Whitakers-Words Checkout, Build, Test
+        # Replace with this line when on main branch
+#         run: cd $ GITHUB_WORKSPACE && make
+        # I don't know which one of these commands actually gets it to work, so for now I'll leave them all
+        run: |
+          echo 'PATH="$HOME/gcc/bin:$PATH"' >> $HOME/.bash_profile
+          export PATH="$HOME/gcc/bin:$PATH"
+          git clone --depth=1 https://github.com/Alex-Vasile/whitakers-words
+          cd whitakers-words
+          make all
 
-#           brew install bash
-#           sed -i '' 's/\/bin/\/usr\/local\/bin/' test/run-tests.sh
-#           make test
+          brew install bash
+          sed -i '' 's/\/bin/\/usr\/local\/bin/' test/run-tests.sh
+          make test
+          
+        # Move files needed for distribution
+      - name: Move Files
+        run: |
+          mkdir words
+          mv whitakers-words/LICENCE.txt   words/
+          mv whitakers-words/bin           words/
+          mv whitakers-words/ADDONS.LAT    words/
+          mv whitakers-words/DICTFILE.GEN  words/
+          mv whitakers-words/EWDSFILE.GEN  words/
+          mv whitakers-words/INDXFILE.GEN  words/
+          mv whitakers-words/INFLECTS.SEC  words/
+          mv whitakers-words/STEMFILE.GEN  words/
+          mv whitakers-words/UNIQUES.LAT   words/
+
+        # TODO: How to incorporate build # or version number into filename?
+      - name: Create Binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: whitakers-words-macOS
+          path: |
+            words
 
   linux:
     runs-on: ubuntu-latest
@@ -52,27 +74,28 @@ jobs:
         # Replace with this line when on main branch
 #         run: cd $ GITHUB_WORKSPACE && make
         run: |
-          git clone --depth=1 https://github.com/mk270/whitakers-words
+          git clone --depth=1 https://github.com/Alex-Vasile/whitakers-words
           cd whitakers-words
           make
+          make test
       
       # Move files needed for distribution
       - name: Move Files
         run: |
-          cd whitakers-words
-          make test
+          mkdir words
+          mv whitakers-words/LICENCE.txt    words/
+          mv whitakers-words/bin            words/
+          mv whitakers-words/ADDONS.LAT     words/
+          mv whitakers-words/DICTFILE.GEN   words/
+          mv whitakers-words/EWDSFILE.GEN   words/
+          mv whitakers-words/INDXFILE.GEN   words/
+          mv whitakers-words/INFLECTS.SEC   words/
+          mv whitakers-words/STEMFILE.GEN   words/
+          mv whitakers-words/UNIQUES.LAT    words/
 
       - name: Create Binary
         uses: actions/upload-artifact@v2
         with:
           name: whitakers-words-linux
           path: |
-            whitakers-words/LICENCE.txt
-            whitakers-words/bin
-            whitakers-words/ADDONS.LAT
-            whitakers-words/DICTFILE.GEN
-            whitakers-words/EWDSFILE.GEN
-            whitakers-words/INDXFILE.GEN
-            whitakers-words/INFLECTS.SEC
-            whitakers-words/STEMFILE.GEN
-            whitakers-words/UNIQUES.LAT
+            words
