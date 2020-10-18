@@ -24,7 +24,7 @@ jobs:
       - name: Whitakers-Words Checkout
         uses: actions/checkout@v2
         with: 
-          path: 'whitaker-words'
+          path: 'whitakers-words'
 
         # TODO: Fix tests to work with older version of bash. This is a hack.
       - name: Whitakers-Words Build, Test
@@ -75,7 +75,7 @@ jobs:
       - name: Whitakers-Words Checkout
         uses: actions/checkout@v2
         with: 
-          path: 'whitaker-words'
+          path: 'whitakers-words'
 
       - name: Whitakers-Words Build, Test
         run: |
