@@ -1,25 +1,33 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Windows
 
 on:
   workflow_dispatch:
 
 jobs:
-  # This workflow contains a single job called "build"
   Windows:
-    # The type of runner that the job will run on
     runs-on: windows-latest
 
-    steps:
-#       - uses: actions/checkout@v2
-        
+    steps:        
       - name: GNAT Install
-        # TODO
-
-      - name: Whitakers-Words Checkout, Build, Test
         run: |
-          git clone --depth=1 https://github.com/Alex-Vasile/whitakers-words
+          # https://www.msys2.org/wiki/MSYS2-installation/
+          wget http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20200903.tar.xz -UseBasicParsing -OutFile msys2.tar.xz
+          Expand-7Zip msys2.tar.xz msys2
+          cd .\msys2
+          # TODO Finish installing msys and mingw
+          pacman -Syuu
+          # https://packages.msys2.org/package/mingw-w64-x86_64-gcc-ada
+          pacman -S mingw-w64-x86_64-gcc-ada
+          # https://packages.msys2.org/package/mingw-w64-x86_64-gprbuild
+          pacman -S mingw-w64-x86_64-gprbuild
+
+      - name: Whitakers-Words Checkout
+        uses: actions/checkout@v2
+        with: 
+          path: 'whitakers-words'
+
+      - name: Whitakers-Words Build and Test
+        run: |
           cd whitakers-words
           make all
           make test
