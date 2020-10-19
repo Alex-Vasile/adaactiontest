@@ -10,11 +10,11 @@ jobs:
     steps:        
       - name: GNAT Install
         run: |
+          $env:Path += ";C:\msys64"
           # https://www.msys2.org/wiki/MSYS2-installation/
-          wget http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20200903.tar.xz -UseBasicParsing -OutFile msys2.tar.xz
-          Expand-7Zip msys2.tar.xz msys2
-          cd .\msys2
-          # TODO Finish installing msys and mingw
+          # wget http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20200903.tar.xz -UseBasicParsing -OutFile msys2.tar.xz
+          # Expand-7Zip msys2.tar.xz msys2
+          # cd .\msys2
           pacman -Syuu
           # https://packages.msys2.org/package/mingw-w64-x86_64-gcc-ada
           pacman -S mingw-w64-x86_64-gcc-ada
