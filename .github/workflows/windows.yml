@@ -28,12 +28,14 @@ jobs:
           path: 'whitakers-words'
 
       - name: Whitakers-Words Build and Test
+        shell: powershell
         run: |
           cd whitakers-words
           make all
           make test
 
       - name: Binary Organize
+        shell: powershell
         run: |
           mkdir words
           mv whitakers-words/LICENCE.txt    words/
