@@ -7,19 +7,21 @@ jobs:
   Windows:
     runs-on: windows-latest
 
-    steps:        
+    steps:
+      - name: MSYS Setup   
       - name: GNAT Install
+        shell: powershell
         run: |
-          $env:Path += ";C:\msys64"
+          cd C:\msys64\
           # https://www.msys2.org/wiki/MSYS2-installation/
-          # wget http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20200903.tar.xz -UseBasicParsing -OutFile msys2.tar.xz
-          # Expand-7Zip msys2.tar.xz msys2
-          # cd .\msys2
-          pacman -Syuu
+          .\msys2.exe pacman -Syuu --noconfirm
+          .\msys2.exe pacman -Syuu --noconfirm
           # https://packages.msys2.org/package/mingw-w64-x86_64-gcc-ada
-          pacman -S mingw-w64-x86_64-gcc-ada
+          .\msys2.exe pacman --noconfirm -S mingw-w64-x86_64-gcc-ada
           # https://packages.msys2.org/package/mingw-w64-x86_64-gprbuild
-          pacman -S mingw-w64-x86_64-gprbuild
+          .\msys2.exe pacman --noconfirm -S mingw-w64-x86_64-gprbuild
+          # https://www.msys2.org/wiki/Porting/
+          .\msys2.exe pacman --noconfirm -S mingw-w64-x86_64-make
 
       - name: Whitakers-Words Checkout
         uses: actions/checkout@v2
