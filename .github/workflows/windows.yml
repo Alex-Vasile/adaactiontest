@@ -24,6 +24,7 @@ jobs:
           .\msys2.exe pacman --noconfirm -S mingw-w64-x86_64-gcc-ada
           .\msys2.exe pacman --noconfirm -S mingw-w64-x86_64-gprbuild
           .\msys2.exe pacman --noconfirm -S mingw-w64-x86_64-make
+          .\msys2.exe pacman --noconfirm -S diffutils
 
 
       - name: Whitakers-Words Checkout
