@@ -12,15 +12,19 @@ jobs:
         shell: powershell
         run: |
           cd C:\msys64\
-          # https://www.msys2.org/wiki/MSYS2-installation/
+          
+          # Running the update twice on purpose
           .\msys2.exe pacman -Syuu --noconfirm
           .\msys2.exe pacman -Syuu --noconfirm
+          
           # https://packages.msys2.org/package/mingw-w64-x86_64-gcc-ada
-          .\msys2.exe pacman --noconfirm -S mingw-w64-x86_64-gcc-ada
           # https://packages.msys2.org/package/mingw-w64-x86_64-gprbuild
+          # https://packages.msys2.org/package/mingw-w64-x86_64-make
+          
+          .\msys2.exe pacman --noconfirm -S mingw-w64-x86_64-gcc-ada
           .\msys2.exe pacman --noconfirm -S mingw-w64-x86_64-gprbuild
-          # https://www.msys2.org/wiki/Porting/
           .\msys2.exe pacman --noconfirm -S mingw-w64-x86_64-make
+
 
       - name: Whitakers-Words Checkout
         uses: actions/checkout@v2
@@ -30,7 +34,11 @@ jobs:
       - name: Whitakers-Words Build and Test
         shell: powershell
         run: |
+          # Make alias for build since it doesn't get added to path
+          Set-Alias -Name make -Value C:\msys64\mingw64\bin\mingw32-make.exe
+          
           cd whitakers-words
+          
           make all
           make test
 
